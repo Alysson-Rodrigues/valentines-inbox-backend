@@ -54,6 +54,6 @@ class User extends Authenticatable
      */
     public function inbox()
     {
-        return $this->hasOne(Inbox::class);
+        return Inbox::where('user_id', $this->id)->first();
     }
 }

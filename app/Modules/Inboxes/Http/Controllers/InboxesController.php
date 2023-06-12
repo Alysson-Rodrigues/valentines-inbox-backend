@@ -49,14 +49,18 @@ class InboxesController extends Controller
         );
     }
 
-    public function show (Inbox $inbox)
+    public function show ()
     {
-        if ($inbox->user_id !== auth()->user()->id) {
-            abort(403);
+        if (!Auth::check()) {
+            abort(403,
+            "You must be logged in to view your inbox."
+            );
         }
 
+        $user = User::where('id', auth()->user()->id)->first();
+        $messages = $this->messageRepository->fetchFromInbox($user->inbox()->id);
         return response(
-            $inbox,
+            $messages,
             200
         );
     }
@@ -114,7 +118,7 @@ class InboxesController extends Controller
 
         $inbox = Inbox::where('magic_link', $magicLink)->first();
 
-        $message = $this->messageRepository->attachOnInbox($message, $inbox->id);
+        $message = $this->messageRepository->attachOnInbox($inbox->id, $message);
 
         return response(
             json_encode(

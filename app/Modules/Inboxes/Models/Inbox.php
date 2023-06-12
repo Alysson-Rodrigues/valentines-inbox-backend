@@ -10,4 +10,9 @@ class Inbox extends Model
         'magic_link',
         'user_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
