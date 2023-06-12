@@ -3,6 +3,7 @@
 namespace App\Modules\Users\Http\Controllers;
 
 use App\Bootstrap\Http\Controllers\Controller;
+use App\Modules\Inboxes\Models\Inbox;
 use App\Modules\Users\Models\User;
 use App\Modules\Users\Repositories\UserRepository;
 use Illuminate\Http\Request;
@@ -87,8 +88,12 @@ class UsersController extends Controller
             abort(403);
         }
 
+        $user = User::where('id', auth()->user()->id)->first();
+
+        $user->inbox = $user->inbox;
+
         return response(
-            auth()->user()
+            $user
         );
     }
 

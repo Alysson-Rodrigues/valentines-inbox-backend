@@ -11,4 +11,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/inbox/{slug}', [InboxesController::class, 'getBySlug']);
 });
 
-Route::post('/inboxes/{inbox}/message', [InboxesController::class, 'storeMessage']);
+Route::post('/inboxes/{magicLink}/message', [InboxesController::class, 'storeMessage']);

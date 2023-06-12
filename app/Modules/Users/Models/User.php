@@ -2,7 +2,7 @@
 
 namespace App\Modules\Users\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Modules\Inboxes\Models\Inbox;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -48,4 +48,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * Get the inbox associated with the user.
+     */
+    public function inbox()
+    {
+        return $this->hasOne(Inbox::class);
+    }
 }

@@ -109,8 +109,10 @@ class InboxesController extends Controller
         );
     }
 
-    public function storeMessage (Request $request, Inbox $inbox) {
+    public function storeMessage (Request $request, $magicLink) {
         $message = $request->all();
+
+        $inbox = Inbox::where('magic_link', $magicLink)->first();
 
         $message = $this->messageRepository->attachOnInbox($message, $inbox->id);
 
