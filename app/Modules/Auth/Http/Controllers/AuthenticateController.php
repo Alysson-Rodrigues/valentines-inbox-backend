@@ -27,7 +27,13 @@ class AuthenticateController extends Controller
             ]);
         }
      
-        return $user->createToken($request->device_name)->plainTextToken;
+        return response(
+            json_encode([
+                'token' => $user->createToken($request->device_name)->plainTextToken,
+                'user' => $user,
+            ]),
+            200
+        );
     }
 
     public function logout()

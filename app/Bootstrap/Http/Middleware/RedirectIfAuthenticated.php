@@ -22,12 +22,12 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                $user = User::find(Auth::id());
-                $device = $request->device_name ?? env('GENERIC_DEVICE_NAME');
-                return response()->json([
-                    'token' => $user->createToken($device)->plainTextToken,
-                    200
-                ]);
+                if ($request->expectsJson()) {
+                    return response()->json([
+                       'error' => 'Youre authenticated already.'
+                    ], 406);
+                }
+                return redirect(RouteServiceProvider::HOME);
             }
         }
 
